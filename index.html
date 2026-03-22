@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MARKADIA — Elevate Your Digital Growth</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --teal:#1de9b6;--teal2:#00bfa5;--teal3:#00897b;
+  --teal-glow:rgba(29,233,182,0.28);--teal-dim:rgba(29,233,182,0.1);
+  --navy:#0d1424;--navy2:#111d30;--navy3:#162440;
+  --white:#eef5ff;--muted:rgba(200,225,255,0.52);
+  --font-h:'Rajdhani',sans-serif;--font-b:'Exo 2',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--navy);color:var(--white);overflow-x:hidden;cursor:none;min-height:100vh}
+#cur{position:fixed;width:8px;height:8px;background:var(--teal);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s}
+#cur2{position:fixed;width:32px;height:32px;border:1.5px solid rgba(29,233,182,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s}
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 52px;height:70px;background:rgba(13,20,36,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(29,233,182,.1)}
+.nav-logo{display:flex;align-items:center;cursor:pointer;text-decoration:none}
+.nav-logo img{height:56px;width:auto;filter:drop-shadow(0 0 10px rgba(29,233,182,.18));background:transparent}
+.nav-tabs{display:flex;align-items:center;gap:2px}
+.tab-btn{background:none;border:none;cursor:pointer;font-family:var(--font-b);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:8px 16px;border-radius:3px;position:relative;transition:color .2s,background .2s}
+.tab-btn::after{content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;background:var(--teal);transform:scaleX(0);transform-origin:center;transition:transform .3s;border-radius:1px}
+.tab-btn:hover{color:var(--white);background:rgba(29,233,182,.05)}
+.tab-btn.active{color:var(--teal)}.tab-btn.active::after{transform:scaleX(1)}
+.nav-cta{display:flex;align-items:center;gap:8px;padding:9px 18px;border:1.5px solid var(--teal);background:transparent;color:var(--teal);font-family:var(--font-b);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:3px;text-decoration:none;transition:all .25s}
+.nav-cta:hover{background:var(--teal);color:var(--navy);box-shadow:0 0 22px var(--teal-glow)}
+
+/* ===== PAGES ===== */
+.page{display:none;min-height:100vh;position:relative;z-index:1;padding-top:70px}
+.page.active{display:block}
+.grid-bg{position:absolute;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(29,233,182,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(29,233,182,.04) 1px,transparent 1px);background-size:60px 60px}
+
+/* ===== HERO ===== */
+.hero-section{min-height:calc(100vh - 70px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 40px 40px;position:relative;overflow:hidden}
+.hero-logo-wrap{margin-bottom:28px;position:relative;z-index:2;animation:fadeUp .7s ease both}
+.hero-logo-wrap img{height:130px;width:auto;filter:drop-shadow(0 0 22px rgba(29,233,182,.18));background:transparent}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(29,233,182,.2);background:rgba(29,233,182,.06);padding:6px 16px;border-radius:2px;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:20px;position:relative;z-index:2;animation:fadeUp .75s .08s ease both}
+.blink{width:5px;height:5px;border-radius:50%;background:var(--teal);animation:blk 1.8s infinite}
+@keyframes blk{0%,100%{opacity:1}50%{opacity:.15}}
+.hero-h1{font-family:var(--font-h);font-size:clamp(44px,8vw,106px);font-weight:700;line-height:.93;letter-spacing:.01em;text-transform:uppercase;margin-bottom:12px;position:relative;z-index:2;animation:fadeUp .8s .15s ease both}
+.tc{color:var(--teal)}.to{-webkit-text-stroke:2px rgba(200,225,255,.2);color:transparent}
+.hero-tag{font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;position:relative;z-index:2;animation:fadeUp .85s .22s ease both}
+.hero-tag em{color:var(--teal);font-style:normal}
+.hero-desc{font-size:15px;color:var(--muted);line-height:1.8;max-width:500px;margin:0 auto 28px;position:relative;z-index:2;animation:fadeUp .9s .28s ease both}
+
+/* ===== ANIMATED CHECKS ===== */
+.checks{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;position:relative;z-index:2;animation:fadeUp .9s .32s ease both}
+.ck{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(29,233,182,.07);
+  border:1px solid rgba(29,233,182,.2);
+  border-radius:6px;padding:10px 18px;
+  font-size:13px;font-weight:600;color:var(--white);
+  transition:all .3s;cursor:default;
+  position:relative;overflow:hidden;
+}
+.ck::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(29,233,182,.1),transparent);opacity:0;transition:opacity .3s}
+.ck:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,233,182,.15)}
+.ck:hover::before{opacity:1}
+.ck lottie-player{flex-shrink:0}
+
+/* ===== BUTTONS ===== */
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2;animation:fadeUp .95s .38s ease both}
+.btn-p{padding:14px 32px;background:linear-gradient(135deg,var(--teal2),var(--teal));color:var(--navy);font-family:var(--font-b);font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border:none;cursor:pointer;border-radius:3px;box-shadow:0 0 26px rgba(29,233,182,.28);transition:all .25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(29,233,182,.5)}
+.btn-o{padding:14px 32px;background:transparent;color:var(--white);font-family:var(--font-b);font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;border:1.5px solid rgba(200,225,255,.18);cursor:pointer;border-radius:3px;transition:all .25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-o:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px)}
+
+/* STATS */
+.stats-bar{display:flex;border-top:1px solid rgba(29,233,182,.1);margin-top:52px;width:100%;max-width:820px;position:relative;z-index:2;animation:fadeUp 1s .46s ease both}
+.stat{flex:1;padding:22px 24px;border-right:1px solid rgba(29,233,182,.1);text-align:left}
+.stat:last-child{border-right:none}
+.stat-n{font-family:var(--font-h);font-size:38px;font-weight:700;color:var(--teal);line-height:1;display:block}
+.stat-l{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* MARQUEE */
+.marq{overflow:hidden;border-top:1px solid rgba(29,233,182,.1);border-bottom:1px solid rgba(29,233,182,.1);padding:12px 0;background:rgba(29,233,182,.02)}
+.marq-inner{display:flex;animation:scroll 22s linear infinite;white-space:nowrap;width:max-content}
+.mi{display:inline-flex;align-items:center;gap:14px;padding:0 24px;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.mdot{width:4px;height:4px;border-radius:50%;background:var(--teal)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ===== PAGE HEADER ===== */
+.ph{padding:68px 60px 48px;position:relative;overflow:hidden;text-align:center}
+.ph .grid-bg{opacity:.5}
+.ph-chip{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(29,233,182,.18);background:rgba(29,233,182,.05);padding:6px 14px;border-radius:2px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;position:relative;z-index:2}
+.ph-h{font-family:var(--font-h);font-size:clamp(38px,7vw,86px);font-weight:700;line-height:.94;text-transform:uppercase;position:relative;z-index:2;margin-bottom:12px}
+.ph-p{font-size:14px;color:var(--muted);line-height:1.75;max-width:520px;margin:0 auto;position:relative;z-index:2}
+
+/* ===== SECTION ===== */
+.sec{padding:56px 60px;position:relative;z-index:1}
+.sl{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.sl::before{content:'';width:24px;height:1px;background:var(--teal)}
+.sh{font-family:var(--font-h);font-size:clamp(28px,4vw,50px);font-weight:700;text-transform:uppercase;line-height:1;margin-bottom:32px}
+
+/* ===== SERVICE CARDS WITH LOTTIE ===== */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.svc-card{background:var(--navy2);border:1px solid rgba(29,233,182,.08);padding:32px 28px;position:relative;overflow:hidden;cursor:pointer;transform-style:preserve-3d;transition:border-color .3s,background .3s}
+.svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal2),var(--teal));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.svc-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(29,233,182,.07) 0%,transparent 65%);opacity:0;transition:opacity .35s}
+.svc-card:hover{border-color:rgba(29,233,182,.28)}.svc-card:hover::before{transform:scaleX(1)}.svc-card:hover::after{opacity:1}
+.sc-num{font-family:var(--font-h);font-size:60px;font-weight:700;color:rgba(29,233,182,.07);position:absolute;top:12px;right:16px;line-height:1;transition:color .3s}
+.svc-card:hover .sc-num{color:rgba(29,233,182,.14)}
+.sc-lottie{width:56px;height:56px;margin-bottom:16px;border:1.5px solid rgba(29,233,182,.18);border-radius:10px;padding:6px;background:rgba(29,233,182,.05);transition:border-color .3s,box-shadow .3s;display:flex;align-items:center;justify-content:center}
+.svc-card:hover .sc-lottie{border-color:var(--teal);box-shadow:0 0 14px var(--teal-glow)}
+.sc-title{font-family:var(--font-h);font-size:19px;font-weight:700;text-transform:uppercase;margin-bottom:9px;line-height:1.1}
+.sc-desc{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+.sc-ul{list-style:none}
+.sc-ul li{font-size:11.5px;color:var(--muted);padding:3px 0;display:flex;align-items:flex-start;gap:7px}
+.sc-ul li::before{content:'→';color:var(--teal);font-size:10px;flex-shrink:0;margin-top:2px}
+
+/* ===== PACKAGES ===== */
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pkg{background:var(--navy2);border:1px solid rgba(29,233,182,.1);border-radius:4px;padding:32px 26px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;cursor:default}
+.pkg:hover{transform:translateY(-5px);border-color:rgba(29,233,182,.28);box-shadow:0 18px 56px rgba(0,0,0,.38)}
+.pkg.featured{border-color:rgba(29,233,182,.28);background:linear-gradient(140deg,var(--navy2) 60%,rgba(29,233,182,.06))}
+.pkg-badge{position:absolute;top:14px;right:14px;background:rgba(29,233,182,.12);border:1px solid rgba(29,233,182,.3);color:var(--teal);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:2px}
+.pkg-tier{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.pkg.featured .pkg-tier{background:linear-gradient(90deg,var(--teal2),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pkg-name{font-family:var(--font-h);font-size:26px;font-weight:700;text-transform:uppercase;margin-bottom:4px}
+.pkg-sub{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+.pkg-section{margin-bottom:14px}
+.pkg-section-title{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;padding-bottom:4px;border-bottom:1px solid rgba(29,233,182,.1)}
+.pkg-ul{list-style:none}
+.pkg-ul li{font-size:12px;color:var(--muted);padding:5px 0;display:flex;align-items:flex-start;gap:7px;border-bottom:1px solid rgba(29,233,182,.04)}
+.pkg-ul li:last-child{border-bottom:none}
+.pkg-ul li::before{content:'✓';color:var(--teal);font-weight:700;font-size:10px;flex-shrink:0;margin-top:2px}
+.pkg-cta{display:block;margin-top:18px;text-align:center;padding:11px;border:1.5px solid rgba(29,233,182,.22);border-radius:3px;color:var(--teal);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .25s}
+.pkg-cta:hover,.pkg.featured .pkg-cta{background:var(--teal);color:var(--navy);border-color:var(--teal)}
+
+/* ===== WHY US ===== */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-bottom:60px}
+.why-vis{position:relative;height:380px;perspective:1000px}
+.cube-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.cube{width:140px;height:140px;position:relative;transform-style:preserve-3d;animation:rotcube 10s linear infinite}
+@keyframes rotcube{to{transform:rotateX(22deg) rotateY(360deg)}}
+.cf{position:absolute;width:140px;height:140px;border:1.5px solid rgba(29,233,182,.28);background:rgba(29,233,182,.03);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:.1em;color:rgba(29,233,182,.5);text-align:center;padding:8px}
+.cf.fr{transform:translateZ(70px)}.cf.bk{transform:rotateY(180deg) translateZ(70px)}
+.cf.lt{transform:rotateY(-90deg) translateZ(70px)}.cf.rt{transform:rotateY(90deg) translateZ(70px)}
+.cf.tp{transform:rotateX(90deg) translateZ(70px)}.cf.bt{transform:rotateX(-90deg) translateZ(70px)}
+.ring{position:absolute;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.r1{width:230px;height:230px;border:1px solid rgba(29,233,182,.1);animation:spinring 7s linear infinite}
+.r2{width:310px;height:310px;border:1px dashed rgba(29,233,182,.07);animation:spinring 13s linear infinite reverse}
+.r3{width:380px;height:380px;border:1px solid rgba(29,233,182,.04);animation:spinring 21s linear infinite}
+@keyframes spinring{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.why-list{list-style:none}
+.why-list li{display:flex;align-items:flex-start;gap:14px;padding:13px 0;border-bottom:1px solid rgba(29,233,182,.07);font-size:13px;color:var(--muted);line-height:1.65}
+.why-list li:first-child{border-top:1px solid rgba(29,233,182,.07)}
+.wl-ic{width:28px;height:28px;flex-shrink:0;border:1px solid rgba(29,233,182,.25);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--teal);margin-top:1px}
+.wl-title{font-weight:700;color:var(--white);font-size:14px;margin-bottom:2px}
+.who-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.wc{background:var(--navy2);border:1px solid rgba(29,233,182,.08);border-radius:4px;padding:24px 16px;text-align:center;transition:all .3s;cursor:default}
+.wc:hover{border-color:rgba(29,233,182,.28);transform:translateY(-4px);background:rgba(29,233,182,.04)}
+.wc-name{font-family:var(--font-h);font-size:13px;font-weight:700;text-transform:uppercase;margin-top:8px}
+.testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:28px}
+.tcard{background:var(--navy2);border:1px solid rgba(29,233,182,.08);border-radius:4px;padding:26px 24px;transition:border-color .3s}
+.tcard:hover{border-color:rgba(29,233,182,.22)}
+.tcard-q{font-size:26px;color:var(--teal);font-family:serif;line-height:1;margin-bottom:8px}
+.tcard-t{font-size:13px;color:var(--white);line-height:1.72;margin-bottom:12px;font-style:italic}
+.tcard-a{font-size:10px;font-weight:700;color:var(--teal);letter-spacing:.09em;text-transform:uppercase}
+
+/* ===== PROCESS ===== */
+.proc-list{display:flex;flex-direction:column;gap:2px}
+.proc-card{display:grid;grid-template-columns:100px 1fr;background:var(--navy2);border:1px solid rgba(29,233,182,.08);position:relative;overflow:hidden;cursor:default;transition:border-color .3s,background .3s}
+.proc-card:hover{border-color:rgba(29,233,182,.25);background:rgba(29,233,182,.025)}
+.proc-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--teal2),var(--teal));transform:scaleY(0);transform-origin:top;transition:transform .4s}
+.proc-card:hover::before{transform:scaleY(1)}
+.proc-num-col{display:flex;align-items:center;justify-content:center;border-right:1px solid rgba(29,233,182,.08);padding:28px 16px}
+.proc-num{font-family:var(--font-h);font-size:58px;font-weight:700;color:rgba(29,233,182,.1);line-height:1}
+.proc-body{padding:28px 32px}
+.proc-title{font-family:var(--font-h);font-size:21px;font-weight:700;text-transform:uppercase;margin-bottom:7px;color:var(--white)}
+.proc-desc{font-size:13px;color:var(--muted);line-height:1.72;max-width:620px}
+.proc-chip{display:inline-block;background:rgba(29,233,182,.07);border:1px solid rgba(29,233,182,.18);color:var(--teal);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-top:10px}
+
+/* ===== CTA STRIP ===== */
+.cta-strip{margin:0 60px 56px;background:linear-gradient(140deg,rgba(29,233,182,.06),rgba(29,233,182,.02));border:1px solid rgba(29,233,182,.12);border-radius:4px;padding:46px 56px;text-align:center;position:relative;overflow:hidden}
+.cta-strip::after{content:'';position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:500px;height:220px;background:radial-gradient(ellipse,rgba(29,233,182,.1),transparent 70%);pointer-events:none}
+.cta-strip h2{font-family:var(--font-h);font-size:clamp(26px,4vw,46px);font-weight:700;text-transform:uppercase;margin-bottom:10px}
+.cta-strip p{font-size:14px;color:var(--muted);margin-bottom:26px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.7}
+.contact-row{display:flex;gap:28px;justify-content:center;margin-top:20px;flex-wrap:wrap;align-items:center}
+.ci-link{font-size:13px;color:var(--teal);font-weight:600;display:flex;align-items:center;gap:8px;text-decoration:none;transition:opacity .2s;border:1px solid rgba(29,233,182,.18);padding:8px 16px;border-radius:3px;background:rgba(29,233,182,.05)}
+.ci-link:hover{opacity:.8;border-color:var(--teal)}
+
+/* ===== ABOUT ===== */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.astat{background:var(--navy2);border:1px solid rgba(29,233,182,.1);border-radius:4px;padding:18px 20px}
+.astat-n{font-family:var(--font-h);font-size:34px;font-weight:700;color:var(--teal)}
+.astat-l{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* ===== QUICK NAV ===== */
+.qnav{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.qcard{background:var(--navy2);border:1px solid rgba(29,233,182,.09);border-radius:4px;padding:26px 22px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.qcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal2),var(--teal));transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.qcard:hover{border-color:rgba(29,233,182,.26);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,.3)}.qcard:hover::before{transform:scaleX(1)}
+.qcard-title{font-family:var(--font-h);font-size:17px;font-weight:700;text-transform:uppercase;margin:10px 0 6px}
+.qcard-desc{font-size:11.5px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.qcard-link{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:6px;transition:gap .25s}
+.qcard:hover .qcard-link{gap:10px}
+
+/* ===== FOOTER ===== */
+footer{padding:48px 60px 28px;border-top:1px solid rgba(29,233,182,.08);position:relative;z-index:1}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:36px}
+.fb-brand .fb-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.fb-brand .fb-top img{height:52px;width:auto;filter:drop-shadow(0 0 8px rgba(29,233,182,.18));background:transparent}
+.fb-brand p{font-size:12px;color:var(--muted);line-height:1.7;max-width:200px}
+.fcol h4{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.fcol ul{list-style:none}
+.fcol ul li{margin-bottom:8px;font-size:12px;color:var(--muted);transition:color .2s}
+.fcol ul li a,.fcol ul li button{color:inherit;text-decoration:none;background:none;border:none;cursor:pointer;font-family:var(--font-b);font-size:12px;padding:0;transition:color .2s}
+.fcol ul li:hover,.fcol ul li a:hover,.fcol ul li button:hover{color:var(--white)}
+.fbot{border-top:1px solid rgba(29,233,182,.07);padding-top:20px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(200,225,255,.2);flex-wrap:wrap;gap:8px}
+.ftag{color:var(--teal);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+
+/* ===== REVEAL ===== */
+.rev{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.rev.vis{opacity:1;transform:translateY(0)}
+
+/* ===== PROC TAGLINE ===== */
+.proc-tagline{text-align:center;padding:28px 32px;border:1px solid rgba(29,233,182,.1);background:rgba(29,233,182,.03);border-radius:4px;margin-top:20px}
+.proc-tagline p{font-family:var(--font-h);font-size:clamp(18px,3vw,30px);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:940px){
+  nav{padding:0 16px;height:64px}.nav-logo img{height:44px}
+  .tab-btn{padding:6px 10px;font-size:10px}.nav-cta{padding:7px 12px;font-size:10px}
+  .svc-grid,.pkg-grid,.qnav{grid-template-columns:1fr}
+  .why-grid,.about-grid{grid-template-columns:1fr}.why-vis{height:280px;margin-bottom:24px}
+  .who-grid{grid-template-columns:repeat(2,1fr)}.testi-grid{grid-template-columns:1fr}
+  .proc-card{grid-template-columns:64px 1fr}.proc-num{font-size:40px}
+  .fg{grid-template-columns:1fr 1fr;gap:20px}
+  .sec,.ph{padding-left:20px;padding-right:20px}
+  .cta-strip{margin:0 20px 40px;padding:32px 22px}
+  .stats-bar{flex-wrap:wrap}.stat{min-width:50%;border-bottom:1px solid rgba(29,233,182,.08)}
+  footer{padding:36px 20px 22px}.hero-section{padding:50px 20px 36px}
+  .checks{gap:10px}.ck{padding:8px 14px}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur2"></div>
+<canvas id="bg"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="javascript:void(0)" onclick="showPage('home')">
+    <img id="nav-logo" src="" alt="Markadia">
+  </a>
+  <div class="nav-tabs">
+    <button class="tab-btn active" id="tab-home" onclick="showPage('home')">Home</button>
+    <button class="tab-btn" id="tab-services" onclick="showPage('services')">Services</button>
+    <button class="tab-btn" id="tab-packages" onclick="showPage('packages')">Packages</button>
+    <button class="tab-btn" id="tab-whyus" onclick="showPage('whyus')">Why Us</button>
+    <button class="tab-btn" id="tab-process" onclick="showPage('process')">Process</button>
+  </div>
+  <a href="tel:+918330879961" class="nav-cta">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><g style="transform-origin:12px 12px;animation:phoneRing 2s ease-in-out infinite"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.22 1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 4.5c0-.55.45-1 1-1H7.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.58.11.35.03.74-.22 1.02L6.6 10.8z" stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g><path d="M15.5 3.5C17.9 4.2 19.8 6.1 20.5 8.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/></path><path d="M15.5 7a2.5 2.5 0 011.5 1.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="0.3s" repeatCount="indefinite"/></path><style>@keyframes phoneRing{0%,100%{transform:rotate(0)}15%{transform:rotate(-18deg)}30%{transform:rotate(18deg)}45%{transform:rotate(-10deg)}60%{transform:rotate(10deg)}75%{transform:rotate(0)}}</style></svg>
+    Book Free Call
+  </a>
+</nav>
+
+<!-- ===================== HOME ===================== -->
+<div class="page active" id="page-home">
+  <div class="hero-section">
+    <div class="grid-bg"></div>
+    <div class="hero-logo-wrap"><img id="hero-logo" src="" alt="Markadia"></div>
+    <div class="hero-badge"><div class="blink"></div>Digital Marketing Agency<div class="blink"></div></div>
+    <h1 class="hero-h1">WE DON'T DO<br><span class="tc">MARKETING.</span><br>WE BUILD <span class="to">SYSTEMS.</span></h1>
+    <p class="hero-tag"><em>MARKADIA</em> — Grow Faster. Sell Smarter.</p>
+    <p class="hero-desc">Markadia helps businesses turn attention into <strong style="color:var(--white)">real revenue</strong> using powerful digital strategies, viral content, and performance marketing.</p>
+
+    <!-- ANIMATED CHECK BADGES -->
+    <div class="checks">
+      <div class="ck">
+        <svg width="28"" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="20,4 24,14 36,14 26,22 30,34 20,26 10,34 14,22 4,14 16,14" stroke="#1de9b6" stroke-width="1.5" fill="rgba(29,233,182,0.12)" stroke-linejoin="round"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/></polygon><circle cx="20" cy="20" r="2.5" fill="#1de9b6"><animate attributeName="r" values="1.5;3.5;1.5" dur="2.5s" repeatCount="indefinite"/></circle></svg>
+        More Leads
+      </div>
+      <div class="ck">
+        <svg width="28"" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="28" width="6" height="8" rx="1" fill="#1de9b6" opacity="0.7"><animate attributeName="height" values="3;8;3" dur="2s" repeatCount="indefinite"/><animate attributeName="y" values="33;28;33" dur="2s" repeatCount="indefinite"/></rect><rect x="13" y="22" width="6" height="14" rx="1" fill="#1de9b6" opacity="0.8"><animate attributeName="height" values="5;14;5" dur="2s" begin="0.25s" repeatCount="indefinite"/><animate attributeName="y" values="31;22;31" dur="2s" begin="0.25s" repeatCount="indefinite"/></rect><rect x="22" y="14" width="6" height="22" rx="1" fill="#1de9b6" opacity="0.9"><animate attributeName="height" values="7;22;7" dur="2s" begin="0.5s" repeatCount="indefinite"/><animate attributeName="y" values="29;14;29" dur="2s" begin="0.5s" repeatCount="indefinite"/></rect><rect x="31" y="6" width="6" height="30" rx="1" fill="#1de9b6"><animate attributeName="height" values="9;30;9" dur="2s" begin="0.75s" repeatCount="indefinite"/><animate attributeName="y" values="27;6;27" dur="2s" begin="0.75s" repeatCount="indefinite"/></rect><path d="M4 36 Q12 26 20 18 Q26 12 36 6" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="2s" repeatCount="indefinite"/></path></svg>
+        More Sales
+      </div>
+      <div class="ck">
+        <svg width="28"" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="20,4 24,14 36,14 26,22 30,34 20,26 10,34 14,22 4,14 16,14" stroke="#1de9b6" stroke-width="1.5" fill="rgba(29,233,182,0.12)" stroke-linejoin="round"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/></polygon><circle cx="20" cy="20" r="2.5" fill="#1de9b6"><animate attributeName="r" values="1.5;3.5;1.5" dur="2.5s" repeatCount="indefinite"/></circle></svg>
+        Real Growth
+      </div>
+    </div>
+
+    <div class="btns">
+      <a href="tel:+918330879961" class="btn-p">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><rect x="3" y="4" width="18" height="17" rx="2" fill="#1de9b6" stroke="#1de9b6" stroke-width="1.2"/><line x1="3" y1="9" x2="21" y2="9" stroke="#0d1424" stroke-width="1.5"/><line x1="8" y1="2" x2="8" y2="6" stroke="#0d1424" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="2" x2="16" y2="6" stroke="#0d1424" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="15" r="2" fill="#0d1424"><animate attributeName="r" values="1.5;2.5;1.5" dur="1.5s" repeatCount="indefinite"/></circle></svg>
+        Book Free Consultation
+      </a>
+      <button class="btn-o" onclick="showPage('services')">Explore Services ↗</button>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><span class="stat-n">200+</span><p class="stat-l">Brands Grown</p></div>
+      <div class="stat"><span class="stat-n">3.8×</span><p class="stat-l">Average ROAS</p></div>
+      <div class="stat"><span class="stat-n">97%</span><p class="stat-l">Client Retention</p></div>
+      <div class="stat"><span class="stat-n">60 Days</span><p class="stat-l">Avg Results Timeline</p></div>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marq">
+    <div class="marq-inner">
+      <span class="mi"><span class="mdot"></span>Social Media Growth</span><span class="mi"><span class="mdot"></span>Content Creation</span><span class="mi"><span class="mdot"></span>Performance Marketing</span><span class="mi"><span class="mdot"></span>SEO & Visibility</span><span class="mi"><span class="mdot"></span>Automation & Systems</span><span class="mi"><span class="mdot"></span>Meta Ads</span><span class="mi"><span class="mdot"></span>Lead Generation</span><span class="mi"><span class="mdot"></span>Brand Strategy</span>
+      <span class="mi"><span class="mdot"></span>Social Media Growth</span><span class="mi"><span class="mdot"></span>Content Creation</span><span class="mi"><span class="mdot"></span>Performance Marketing</span><span class="mi"><span class="mdot"></span>SEO & Visibility</span><span class="mi"><span class="mdot"></span>Automation & Systems</span><span class="mi"><span class="mdot"></span>Meta Ads</span><span class="mi"><span class="mdot"></span>Lead Generation</span><span class="mi"><span class="mdot"></span>Brand Strategy</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="sec rev">
+    <div class="about-grid">
+      <div>
+        <div class="sl">About Us</div>
+        <h2 class="sh">MODERN AGENCY<br><span class="tc">REAL RESULTS</span></h2>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.8;margin-bottom:12px">Markadia is a modern digital marketing agency focused on helping businesses <strong style="color:var(--white)">grow fast in the digital world</strong>. We don't believe in random posting or outdated strategies.</p>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.8;margin-bottom:20px">We build <strong style="color:var(--white)">growth systems</strong> that turn your content, ads, and audience into <strong style="color:var(--white)">consistent customers</strong>. Whether you're a startup, local business, or online brand — we help you scale with clarity and strategy.</p>
+        <div class="btns" style="justify-content:flex-start">
+          <button class="btn-p" onclick="showPage('whyus')">Why Choose Us ↗</button>
+        </div>
+      </div>
+      <div class="about-stat-grid">
+        <div class="astat"><div class="astat-n">200+</div><div class="astat-l">Brands Helped</div></div>
+        <div class="astat"><div class="astat-n">97%</div><div class="astat-l">Client Retention</div></div>
+        <div class="astat"><div class="astat-n">3.8×</div><div class="astat-l">Avg ROAS</div></div>
+        <div class="astat"><div class="astat-n">60</div><div class="astat-l">Days to Results</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK NAV -->
+  <div class="sec rev" style="padding-top:0">
+    <div class="sl">Explore</div>
+    <h2 class="sh" style="margin-bottom:22px">WHAT WE <span class="tc">OFFER</span></h2>
+    <div class="qnav">
+      <div class="qcard" onclick="showPage('services')">
+        <svg width="44" height="44" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="8" stroke="#1de9b6" stroke-width="1.8" fill="none"><animate attributeName="r" values="8;11;8" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.5;1" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="20" cy="20" r="3.5" fill="#1de9b6"/><circle cx="20" cy="20" r="15" stroke="#1de9b6" stroke-width="0.8" stroke-dasharray="4 3" fill="none"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="8s" repeatCount="indefinite"/></circle><circle cx="20" cy="5" r="2.5" fill="#1de9b6" opacity="0.6"/><circle cx="35" cy="20" r="2.5" fill="#1de9b6" opacity="0.6"/><circle cx="20" cy="35" r="2.5" fill="#1de9b6" opacity="0.6"/><circle cx="5" cy="20" r="2.5" fill="#1de9b6" opacity="0.6"/></svg>
+        <div class="qcard-title">Services</div>
+        <div class="qcard-desc">Social media, SEO, content, e-commerce, automation & ads.</div>
+        <div class="qcard-link">View Services →</div>
+      </div>
+      <div class="qcard" onclick="showPage('packages')">
+        <svg width="44" height="44" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="17" cy="17" r="10" stroke="#1de9b6" stroke-width="1.8" fill="none"/><circle cx="17" cy="17" r="5" stroke="#1de9b6" stroke-width="0.8" fill="none"><animate attributeName="r" values="3;9;3" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0;0.8" dur="2.5s" repeatCount="indefinite"/></circle><line x1="25" y1="25" x2="37" y2="37" stroke="#1de9b6" stroke-width="2.2" stroke-linecap="round"><animate attributeName="x2" values="35;37;35" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="35;37;35" dur="1.5s" repeatCount="indefinite"/></line></svg>
+        <div class="qcard-title">Packages</div>
+        <div class="qcard-desc">Silver, Gold & Platinum plans for every growth stage.</div>
+        <div class="qcard-link">See Pricing →</div>
+      </div>
+      <div class="qcard" onclick="showPage('whyus')">
+        <svg width="44" height="44" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="20,4 24,14 36,14 26,22 30,34 20,26 10,34 14,22 4,14 16,14" stroke="#1de9b6" stroke-width="1.5" fill="rgba(29,233,182,0.12)" stroke-linejoin="round"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/></polygon><circle cx="20" cy="20" r="2.5" fill="#1de9b6"><animate attributeName="r" values="1.5;3.5;1.5" dur="2.5s" repeatCount="indefinite"/></circle></svg>
+        <div class="qcard-title">Why Us</div>
+        <div class="qcard-desc">Results-first mindset, data-driven strategy, proven system.</div>
+        <div class="qcard-link">Why Markadia →</div>
+      </div>
+      <div class="qcard" onclick="showPage('process')">
+        <svg width="44" height="44" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="12" stroke="#1de9b6" stroke-width="1.8" fill="none"/><circle cx="20" cy="20" r="3" fill="#1de9b6"/><path d="M20 8v5M20 27v5M8 20h5M27 20h5M11.5 11.5l3.5 3.5M25 25l3.5 3.5M28.5 11.5L25 15M15 25l-3.5 3.5" stroke="#1de9b6" stroke-width="2" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="5s" repeatCount="indefinite"/></path></svg>
+        <div class="qcard-title">Process</div>
+        <div class="qcard-desc">Our 5-step system: Analyze → Strategy → Create → Optimize → Scale.</div>
+        <div class="qcard-link">How It Works →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip rev">
+    <h2>READY TO <span class="tc">GROW?</span></h2>
+    <p>Stop wasting time on random marketing. Start building a system that brings real customers and consistent revenue.</p>
+    <div class="btns" style="justify-content:center">
+      <a href="tel:+918330879961" class="btn-p">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><rect x="3" y="4" width="18" height="17" rx="2" fill="#1de9b6" stroke="#1de9b6" stroke-width="1.2"/><line x1="3" y1="9" x2="21" y2="9" stroke="#0d1424" stroke-width="1.5"/><line x1="8" y1="2" x2="8" y2="6" stroke="#0d1424" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="2" x2="16" y2="6" stroke="#0d1424" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="15" r="2" fill="#0d1424"><animate attributeName="r" values="1.5;2.5;1.5" dur="1.5s" repeatCount="indefinite"/></circle></svg>
+        Book Free Consultation Now
+      </a>
+      <a href="mailto:markadia.ad@gmail.com" class="btn-o">✉ Send Email</a>
+    </div>
+    <div class="contact-row">
+      <a href="mailto:markadia.ad@gmail.com" class="ci-link">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><rect x="2" y="5" width="20" height="15" rx="2" stroke="#1de9b6" stroke-width="1.8" fill="none"/><path stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" fill="none"><animate attributeName="d" values="M2 7l10 7 10-7;M2 5l10 5 10-5;M2 7l10 7 10-7" dur="2.5s" repeatCount="indefinite"/></path><line x1="12" y1="2" x2="12" y2="5" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round"><animate attributeName="y1" values="2;0;2" dur="2.5s" repeatCount="indefinite"/></line><polyline points="10,4 12,2 14,4" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="points" values="10,4 12,2 14,4;10,3 12,1 14,3;10,4 12,2 14,4" dur="2.5s" repeatCount="indefinite"/></polyline></svg>
+        markadia.ad@gmail.com
+      </a>
+      <a href="tel:+918330879961" class="ci-link">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><g style="transform-origin:12px 12px;animation:phoneRing 2s ease-in-out infinite"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.22 1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 4.5c0-.55.45-1 1-1H7.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.58.11.35.03.74-.22 1.02L6.6 10.8z" stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g><path d="M15.5 3.5C17.9 4.2 19.8 6.1 20.5 8.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/></path><path d="M15.5 7a2.5 2.5 0 011.5 1.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="0.3s" repeatCount="indefinite"/></path><style>@keyframes phoneRing{0%,100%{transform:rotate(0)}15%{transform:rotate(-18deg)}30%{transform:rotate(18deg)}45%{transform:rotate(-10deg)}60%{transform:rotate(10deg)}75%{transform:rotate(0)}}</style></svg>
+        8330879961
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="fg">
+      <div class="fb-brand">
+        <div class="fb-top"><img id="foot-logo" src="" alt="Markadia"></div>
+        <p>Your Digital Growth Partner. We build growth systems that turn your content, ads, and audience into consistent customers.</p>
+      </div>
+      <div class="fcol"><h4>Pages</h4><ul>
+        <li><button onclick="showPage('services')">Services</button></li>
+        <li><button onclick="showPage('packages')">Packages</button></li>
+        <li><button onclick="showPage('whyus')">Why Us</button></li>
+        <li><button onclick="showPage('process')">Process</button></li>
+      </ul></div>
+      <div class="fcol"><h4>Follow Us</h4><ul><li>Instagram</li><li>Facebook</li><li>LinkedIn</li></ul></div>
+      <div class="fcol"><h4>Contact</h4><ul>
+        <li><a href="mailto:markadia.ad@gmail.com">markadia.ad@gmail.com</a></li>
+        <li><a href="tel:+918330879961">8330879961</a></li>
+      </ul></div>
+    </div>
+    <div class="fbot"><span>© 2026 Markadia Digital Marketing Agency. All rights reserved.</span><span class="ftag">Elevate Your Digital Growth ↑</span></div>
+  </footer>
+</div>
+
+<!-- ===================== SERVICES ===================== -->
+<div class="page" id="page-services">
+  <div class="ph"><div class="grid-bg"></div>
+    <div class="ph-chip">What We Do</div>
+    <h1 class="ph-h">OUR <span class="tc">SERVICES</span></h1>
+    <p class="ph-p">We help brands dominate the digital space through strategy, viral content, and performance marketing that converts attention into real revenue.</p>
+  </div>
+  <div class="sec">
+    <div class="svc-grid">
+      <div class="svc-card">
+        <div class="sc-num">01</div>
+        <div class="sc-lottie"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="8" stroke="#1de9b6" stroke-width="1.8" fill="none"><animate attributeName="r" values="8;11;8" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.5;1" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="20" cy="20" r="3.5" fill="#1de9b6"/><circle cx="20" cy="20" r="15" stroke="#1de9b6" stroke-width="0.8" stroke-dasharray="4 3" fill="none"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="8s" repeatCount="indefinite"/></circle><circle cx="20" cy="5" r="2.5" fill="#1de9b6" opacity="0.6"/><circle cx="35" cy="20" r="2.5" fill="#1de9b6" opacity="0.6"/><circle cx="20" cy="35" r="2.5" fill="#1de9b6" opacity="0.6"/><circle cx="5" cy="20" r="2.5" fill="#1de9b6" opacity="0.6"/></svg></div>
+        <h3 class="sc-title">Social Media Growth</h3>
+        <p class="sc-desc">We turn your social media into a <strong style="color:var(--white)">customer machine</strong> that works around the clock.</p>
+        <ul class="sc-ul"><li>Content strategy + viral reels</li><li>Consistent posting & engagement</li><li>Instagram & Facebook growth</li></ul>
+      </div>
+      <div class="svc-card">
+        <div class="sc-num">02</div>
+        <div class="sc-lottie"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="10" width="24" height="20" rx="3" stroke="#1de9b6" stroke-width="1.8" fill="none"/><path d="M26 16l10-6v20l-10-6V16z" stroke="#1de9b6" stroke-width="1.8" stroke-linejoin="round" fill="rgba(29,233,182,0.15)"><animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite"/></path><circle cx="14" cy="20" r="4" fill="rgba(29,233,182,0.3)" stroke="#1de9b6" stroke-width="1.2"><animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/></circle><polygon points="12,17 18,20 12,23" fill="#1de9b6"/></svg></div>
+        <h3 class="sc-title">Content Creation</h3>
+        <p class="sc-desc">We create content that <strong style="color:var(--white)">grabs attention and converts</strong> viewers into paying customers.</p>
+        <ul class="sc-ul"><li>Reels & short-form videos</li><li>Ad creatives that convert</li><li>Brand storytelling content</li></ul>
+      </div>
+      <div class="svc-card">
+        <div class="sc-num">03</div>
+        <div class="sc-lottie"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="28" width="6" height="8" rx="1" fill="#1de9b6" opacity="0.7"><animate attributeName="height" values="3;8;3" dur="2s" repeatCount="indefinite"/><animate attributeName="y" values="33;28;33" dur="2s" repeatCount="indefinite"/></rect><rect x="13" y="22" width="6" height="14" rx="1" fill="#1de9b6" opacity="0.8"><animate attributeName="height" values="5;14;5" dur="2s" begin="0.25s" repeatCount="indefinite"/><animate attributeName="y" values="31;22;31" dur="2s" begin="0.25s" repeatCount="indefinite"/></rect><rect x="22" y="14" width="6" height="22" rx="1" fill="#1de9b6" opacity="0.9"><animate attributeName="height" values="7;22;7" dur="2s" begin="0.5s" repeatCount="indefinite"/><animate attributeName="y" values="29;14;29" dur="2s" begin="0.5s" repeatCount="indefinite"/></rect><rect x="31" y="6" width="6" height="30" rx="1" fill="#1de9b6"><animate attributeName="height" values="9;30;9" dur="2s" begin="0.75s" repeatCount="indefinite"/><animate attributeName="y" values="27;6;27" dur="2s" begin="0.75s" repeatCount="indefinite"/></rect><path d="M4 36 Q12 26 20 18 Q26 12 36 6" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="2s" repeatCount="indefinite"/></path></svg></div>
+        <h3 class="sc-title">Performance Marketing</h3>
+        <p class="sc-desc">We run ads that <strong style="color:var(--white)">bring real results</strong> — leads, sales, and measurable ROI every month.</p>
+        <ul class="sc-ul"><li>Meta Ads (Facebook & Instagram)</li><li>Lead generation campaigns</li><li>Conversion optimization</li></ul>
+      </div>
+      <div class="svc-card">
+        <div class="sc-num">04</div>
+        <div class="sc-lottie"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="17" cy="17" r="10" stroke="#1de9b6" stroke-width="1.8" fill="none"/><circle cx="17" cy="17" r="5" stroke="#1de9b6" stroke-width="0.8" fill="none"><animate attributeName="r" values="3;9;3" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0;0.8" dur="2.5s" repeatCount="indefinite"/></circle><line x1="25" y1="25" x2="37" y2="37" stroke="#1de9b6" stroke-width="2.2" stroke-linecap="round"><animate attributeName="x2" values="35;37;35" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="35;37;35" dur="1.5s" repeatCount="indefinite"/></line></svg></div>
+        <h3 class="sc-title">SEO & Visibility</h3>
+        <p class="sc-desc">We help your business <strong style="color:var(--white)">get found online</strong> when customers are actively searching for you.</p>
+        <ul class="sc-ul"><li>Google ranking & authority</li><li>Local SEO (Maps visibility)</li><li>Keyword targeting strategy</li></ul>
+      </div>
+      <div class="svc-card">
+        <div class="sc-num">05</div>
+        <div class="sc-lottie"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="12" stroke="#1de9b6" stroke-width="1.8" fill="none"/><circle cx="20" cy="20" r="3" fill="#1de9b6"/><path d="M20 8v5M20 27v5M8 20h5M27 20h5M11.5 11.5l3.5 3.5M25 25l3.5 3.5M28.5 11.5L25 15M15 25l-3.5 3.5" stroke="#1de9b6" stroke-width="2" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="5s" repeatCount="indefinite"/></path></svg></div>
+        <h3 class="sc-title">Automation & Systems</h3>
+        <p class="sc-desc">We build smart systems that <strong style="color:var(--white)">save time and increase sales</strong> automatically 24/7.</p>
+        <ul class="sc-ul"><li>Lead automation & follow-up</li><li>Customer handling systems</li><li>Sales funnel setup</li></ul>
+      </div>
+      <div class="svc-card">
+        <div class="sc-num">06</div>
+        <div class="sc-lottie"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="20,4 24,14 36,14 26,22 30,34 20,26 10,34 14,22 4,14 16,14" stroke="#1de9b6" stroke-width="1.5" fill="rgba(29,233,182,0.12)" stroke-linejoin="round"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/></polygon><circle cx="20" cy="20" r="2.5" fill="#1de9b6"><animate attributeName="r" values="1.5;3.5;1.5" dur="2.5s" repeatCount="indefinite"/></circle></svg></div>
+        <h3 class="sc-title">Results-Driven Strategy</h3>
+        <p class="sc-desc">We focus on <strong style="color:var(--white)">measurable growth</strong> — leads, sales, and customer acquisition — not vanity metrics.</p>
+        <ul class="sc-ul"><li>Full growth system design</li><li>Competitor & market analysis</li><li>Monthly strategy reviews</li></ul>
+      </div>
+    </div>
+  </div>
+  <div class="cta-strip rev">
+    <h2>READY TO <span class="tc">START GROWING?</span></h2>
+    <p>Book a free consultation and we'll map out exactly which services fit your business goals.</p>
+    <div class="btns" style="justify-content:center">
+      <a href="tel:+918330879961" class="btn-p">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><rect x="3" y="4" width="18" height="17" rx="2" fill="#1de9b6" stroke="#1de9b6" stroke-width="1.2"/><line x1="3" y1="9" x2="21" y2="9" stroke="#0d1424" stroke-width="1.5"/><line x1="8" y1="2" x2="8" y2="6" stroke="#0d1424" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="2" x2="16" y2="6" stroke="#0d1424" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="15" r="2" fill="#0d1424"><animate attributeName="r" values="1.5;2.5;1.5" dur="1.5s" repeatCount="indefinite"/></circle></svg>
+        Book Free Consultation
+      </a>
+      <a href="mailto:markadia.ad@gmail.com" class="btn-o">📧 Email Us</a>
+    </div>
+    <div class="contact-row">
+      <a href="mailto:markadia.ad@gmail.com" class="ci-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><rect x="2" y="5" width="20" height="15" rx="2" stroke="#1de9b6" stroke-width="1.8" fill="none"/><path stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" fill="none"><animate attributeName="d" values="M2 7l10 7 10-7;M2 5l10 5 10-5;M2 7l10 7 10-7" dur="2.5s" repeatCount="indefinite"/></path><line x1="12" y1="2" x2="12" y2="5" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round"><animate attributeName="y1" values="2;0;2" dur="2.5s" repeatCount="indefinite"/></line><polyline points="10,4 12,2 14,4" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="points" values="10,4 12,2 14,4;10,3 12,1 14,3;10,4 12,2 14,4" dur="2.5s" repeatCount="indefinite"/></polyline></svg>markadia.ad@gmail.com</a>
+      <a href="tel:+918330879961" class="ci-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><g style="transform-origin:12px 12px;animation:phoneRing 2s ease-in-out infinite"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.22 1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 4.5c0-.55.45-1 1-1H7.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.58.11.35.03.74-.22 1.02L6.6 10.8z" stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g><path d="M15.5 3.5C17.9 4.2 19.8 6.1 20.5 8.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/></path><path d="M15.5 7a2.5 2.5 0 011.5 1.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="0.3s" repeatCount="indefinite"/></path><style>@keyframes phoneRing{0%,100%{transform:rotate(0)}15%{transform:rotate(-18deg)}30%{transform:rotate(18deg)}45%{transform:rotate(-10deg)}60%{transform:rotate(10deg)}75%{transform:rotate(0)}}</style></svg>8330879961</a>
+    </div>
+  </div>
+  <footer><div class="fbot"><span>© 2026 Markadia. All rights reserved.</span><span class="ftag">Elevate Your Digital Growth ↑</span><a href="mailto:markadia.ad@gmail.com" style="color:var(--teal);text-decoration:none;font-size:11px">markadia.ad@gmail.com</a></div></footer>
+</div>
+
+<!-- ===================== PACKAGES ===================== -->
+<div class="page" id="page-packages">
+  <div class="ph"><div class="grid-bg"></div>
+    <div class="ph-chip">Pricing Plans</div>
+    <h1 class="ph-h">CHOOSE YOUR <span class="tc">PLAN</span></h1>
+    <p class="ph-p">Transparent packages built for every stage of business growth. Strategy, execution, and reporting included — no hidden fees.</p>
+  </div>
+  <div class="sec">
+    <div class="pkg-grid">
+      <div class="pkg rev">
+        <div class="pkg-tier">🥈 Silver</div><div class="pkg-name">Starter Growth</div>
+        <p class="pkg-sub">Perfect for small businesses getting started online</p>
+        <div class="pkg-section"><div class="pkg-section-title">Social Media</div><ul class="pkg-ul"><li>12 posts/month (3 per week)</li><li>Graphic designs</li><li>Caption writing + hashtags</li><li>2 platforms (Instagram & Facebook)</li></ul></div>
+        <div class="pkg-section"><div class="pkg-section-title">Content</div><ul class="pkg-ul"><li>5 reels/month</li><li>Basic editing</li></ul></div>
+        <div class="pkg-section"><div class="pkg-section-title">Profile Optimization</div><ul class="pkg-ul"><li>Bio optimization</li><li>Highlights setup</li><li>Brand tone guidance</li></ul></div>
+        <div class="pkg-section"><div class="pkg-section-title">Support</div><ul class="pkg-ul"><li>Monthly performance report</li><li>WhatsApp support</li></ul></div>
+        <a href="tel:+918330879961" class="pkg-cta">📞 Get Started</a>
+      </div>
+      <div class="pkg featured rev" style="transition-delay:.1s">
+        <div class="pkg-badge">Most Popular</div>
+        <div class="pkg-tier">🥇 Gold</div><div class="pkg-name">Growth Package</div>
+        <p class="pkg-sub">Everything in Silver + advanced growth tools</p>
+        <div class="pkg-section"><div class="pkg-section-title">Social Media</div><ul class="pkg-ul"><li>20 posts/month</li><li>2 platforms</li><li>Trend research</li><li>Content calendar</li></ul></div>
+        <div class="pkg-section"><div class="pkg-section-title">Video</div><ul class="pkg-ul"><li>10 reels/month</li><li>Trendy transitions</li><li>Subtitles</li></ul></div>
+        <div class="pkg-section"><div class="pkg-section-title">Marketing</div><ul class="pkg-ul"><li>Basic Meta Ads management</li><li>Audience research</li><li>Lead form setup</li></ul></div>
+        <div class="pkg-section"><div class="pkg-section-title">Branding & Analytics</div><ul class="pkg-ul"><li>Logo touch-up</li><li>Brand color guidance</li><li>Bi-weekly report</li><li>Growth strategy call</li></ul></div>
+        <a href="tel:+918330879961" class="pkg-cta">📞 Get Started</a>
+      </div>
+      <div class="pkg rev" style="transition-delay:.2s">
+        <div class="pkg-tier">💎 Platinum</div><div class="pkg-name">Complete Growth</div>
+        <p class="pkg-sub">Everything in Gold + full business domination</p>
+        <div class="pkg-section"><div class="pkg-section-title">Social Media</div><ul class="pkg-ul"><li>30 posts/month</li><li>3 platforms</li><li>Daily stories</li><li>Community management</li></ul></div>
+        <div class="pkg-section"><div class="pkg-section-title">Video</div><ul class="pkg-ul"><li>15 reels/month</li><li>Professional editing</li><li>Voiceover support</li></ul></div>
+        <div class="pkg-section"><div class="pkg-section-title">Performance Marketing</div><ul class="pkg-ul"><li>Advanced Meta Ads</li><li>Funnel setup</li><li>Retargeting</li><li>Pixel setup</li></ul></div>
+        <div class="pkg-section"><div class="pkg-section-title">Website & Business</div><ul class="pkg-ul"><li>Landing page</li><li>SEO basics</li><li>Chat integration</li><li>Competitor analysis</li><li>Weekly meetings</li><li>Dedicated manager</li></ul></div>
+        <a href="tel:+918330879961" class="pkg-cta">📞 Get Started</a>
+      </div>
+    </div>
+    <div class="rev" style="text-align:center;margin-top:32px;padding:26px;background:rgba(29,233,182,.04);border:1px solid rgba(29,233,182,.1);border-radius:4px">
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px">Not sure which plan fits? <strong style="color:var(--white)">Book a free 15-minute consultation</strong> — we'll recommend the perfect package for your business.</p>
+      <div class="btns" style="justify-content:center">
+        <a href="tel:+918330879961" class="btn-p" style="font-size:11px;padding:11px 26px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><g style="transform-origin:12px 12px;animation:phoneRing 2s ease-in-out infinite"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.22 1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 4.5c0-.55.45-1 1-1H7.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.58.11.35.03.74-.22 1.02L6.6 10.8z" stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g><path d="M15.5 3.5C17.9 4.2 19.8 6.1 20.5 8.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/></path><path d="M15.5 7a2.5 2.5 0 011.5 1.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="0.3s" repeatCount="indefinite"/></path><style>@keyframes phoneRing{0%,100%{transform:rotate(0)}15%{transform:rotate(-18deg)}30%{transform:rotate(18deg)}45%{transform:rotate(-10deg)}60%{transform:rotate(10deg)}75%{transform:rotate(0)}}</style></svg>Call: 8330879961</a>
+        <a href="mailto:markadia.ad@gmail.com" class="btn-o" style="font-size:11px;padding:11px 26px">📧 markadia.ad@gmail.com</a>
+      </div>
+    </div>
+  </div>
+  <footer><div class="fbot"><span>© 2026 Markadia. All rights reserved.</span><span class="ftag">Elevate Your Digital Growth ↑</span><a href="mailto:markadia.ad@gmail.com" style="color:var(--teal);text-decoration:none;font-size:11px">markadia.ad@gmail.com</a></div></footer>
+</div>
+
+<!-- ===================== WHY US ===================== -->
+<div class="page" id="page-whyus">
+  <div class="ph"><div class="grid-bg"></div>
+    <div class="ph-chip">Why Markadia</div>
+    <h1 class="ph-h">WHY CHOOSE <span class="tc">US?</span></h1>
+    <p class="ph-p">We focus on results, not just posts. Strategy + content + ads = a full growth system that delivers real business impact.</p>
+  </div>
+  <div class="sec">
+    <div class="why-grid rev">
+      <div class="why-vis">
+        <div class="cube-scene">
+          <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+          <div class="cube">
+            <div class="cf fr">RESULTS</div><div class="cf bk">MARKADIA</div>
+            <div class="cf lt">GROWTH</div><div class="cf rt">DIGITAL</div>
+            <div class="cf tp">STRATEGY</div><div class="cf bt">ELEVATE</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sl">Our Edge</div>
+        <h2 class="sh">BUILT FOR <span class="tc">RESULTS</span></h2>
+        <ul class="why-list">
+          <li><div class="wl-ic">✓</div><div><div class="wl-title">Results, not just posts</div>We focus on leads, sales, and ROI — not follower counts or vanity metrics.</div></li>
+          <li><div class="wl-ic">◈</div><div><div class="wl-title">Strategy + content + ads = full system</div>We don't do pieces — we build the complete growth engine for your business.</div></li>
+          <li><div class="wl-ic">↑</div><div><div class="wl-title">Trend-based fast execution</div>We ride trends fast — your brand gets visibility exactly when it matters most.</div></li>
+          <li><div class="wl-ic">₹</div><div><div class="wl-title">Affordable for growing businesses</div>Premium-quality marketing at pricing built for growth-stage budgets.</div></li>
+          <li><div class="wl-ic">→</div><div><div class="wl-title">We turn views into customers</div>From scroll-stop to sale — we engineer the full customer acquisition journey.</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rev" style="margin-bottom:52px">
+      <div class="sl">Our Clients</div>
+      <h2 class="sh" style="margin-bottom:20px">WHO WE <span class="tc">WORK WITH</span></h2>
+      <div class="who-grid">
+        <div class="wc"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto"><polygon points="20,4 24,14 36,14 26,22 30,34 20,26 10,34 14,22 4,14 16,14" stroke="#1de9b6" stroke-width="1.5" fill="rgba(29,233,182,0.12)" stroke-linejoin="round"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/></polygon><circle cx="20" cy="20" r="2.5" fill="#1de9b6"><animate attributeName="r" values="1.5;3.5;1.5" dur="2.5s" repeatCount="indefinite"/></circle></svg><div class="wc-name">Startups</div></div>
+        <div class="wc"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto"><circle cx="17" cy="17" r="10" stroke="#1de9b6" stroke-width="1.8" fill="none"/><circle cx="17" cy="17" r="5" stroke="#1de9b6" stroke-width="0.8" fill="none"><animate attributeName="r" values="3;9;3" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0;0.8" dur="2.5s" repeatCount="indefinite"/></circle><line x1="25" y1="25" x2="37" y2="37" stroke="#1de9b6" stroke-width="2.2" stroke-linecap="round"><animate attributeName="x2" values="35;37;35" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="35;37;35" dur="1.5s" repeatCount="indefinite"/></line></svg><div class="wc-name">Local Businesses</div></div>
+        <div class="wc"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto"><rect x="4" y="28" width="6" height="8" rx="1" fill="#1de9b6" opacity="0.7"><animate attributeName="height" values="3;8;3" dur="2s" repeatCount="indefinite"/><animate attributeName="y" values="33;28;33" dur="2s" repeatCount="indefinite"/></rect><rect x="13" y="22" width="6" height="14" rx="1" fill="#1de9b6" opacity="0.8"><animate attributeName="height" values="5;14;5" dur="2s" begin="0.25s" repeatCount="indefinite"/><animate attributeName="y" values="31;22;31" dur="2s" begin="0.25s" repeatCount="indefinite"/></rect><rect x="22" y="14" width="6" height="22" rx="1" fill="#1de9b6" opacity="0.9"><animate attributeName="height" values="7;22;7" dur="2s" begin="0.5s" repeatCount="indefinite"/><animate attributeName="y" values="29;14;29" dur="2s" begin="0.5s" repeatCount="indefinite"/></rect><rect x="31" y="6" width="6" height="30" rx="1" fill="#1de9b6"><animate attributeName="height" values="9;30;9" dur="2s" begin="0.75s" repeatCount="indefinite"/><animate attributeName="y" values="27;6;27" dur="2s" begin="0.75s" repeatCount="indefinite"/></rect><path d="M4 36 Q12 26 20 18 Q26 12 36 6" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="2s" repeatCount="indefinite"/></path></svg><div class="wc-name">E-commerce Brands</div></div>
+        <div class="wc"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto"><circle cx="20" cy="20" r="8" stroke="#1de9b6" stroke-width="1.8" fill="none"><animate attributeName="r" values="8;11;8" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.5;1" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="20" cy="20" r="3.5" fill="#1de9b6"/><circle cx="20" cy="20" r="15" stroke="#1de9b6" stroke-width="0.8" stroke-dasharray="4 3" fill="none"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="8s" repeatCount="indefinite"/></circle><circle cx="20" cy="5" r="2.5" fill="#1de9b6" opacity="0.6"/><circle cx="35" cy="20" r="2.5" fill="#1de9b6" opacity="0.6"/><circle cx="20" cy="35" r="2.5" fill="#1de9b6" opacity="0.6"/><circle cx="5" cy="20" r="2.5" fill="#1de9b6" opacity="0.6"/></svg><div class="wc-name">Personal Brands</div></div>
+        <div class="wc"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto"><circle cx="20" cy="20" r="12" stroke="#1de9b6" stroke-width="1.8" fill="none"/><circle cx="20" cy="20" r="3" fill="#1de9b6"/><path d="M20 8v5M20 27v5M8 20h5M27 20h5M11.5 11.5l3.5 3.5M25 25l3.5 3.5M28.5 11.5L25 15M15 25l-3.5 3.5" stroke="#1de9b6" stroke-width="2" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="5s" repeatCount="indefinite"/></path></svg><div class="wc-name">Service Businesses</div></div>
+      </div>
+    </div>
+    <div class="rev">
+      <div class="sl">Client Results</div>
+      <h2 class="sh" style="margin-bottom:0">WHAT CLIENTS <span class="tc">SAY</span></h2>
+      <div class="testi-grid">
+        <div class="tcard"><div class="tcard-q">"</div><p class="tcard-t">Markadia helped us double our sales in just 60 days. Their content strategy and ad management was a complete game-changer for our brand.</p><div class="tcard-a">— E-commerce Client</div></div>
+        <div class="tcard"><div class="tcard-q">"</div><p class="tcard-t">Best decision we made for our business growth. The team genuinely understands how to turn followers into real paying customers.</p><div class="tcard-a">— Local Business Owner</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="cta-strip rev">
+    <h2>JOIN 200+ <span class="tc">GROWING BRANDS</span></h2>
+    <p>Ready to experience results-first marketing? Let's talk about your growth goals today.</p>
+    <div class="btns" style="justify-content:center">
+      <a href="tel:+918330879961" class="btn-p"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><g style="transform-origin:12px 12px;animation:phoneRing 2s ease-in-out infinite"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.22 1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 4.5c0-.55.45-1 1-1H7.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.58.11.35.03.74-.22 1.02L6.6 10.8z" stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g><path d="M15.5 3.5C17.9 4.2 19.8 6.1 20.5 8.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/></path><path d="M15.5 7a2.5 2.5 0 011.5 1.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="0.3s" repeatCount="indefinite"/></path><style>@keyframes phoneRing{0%,100%{transform:rotate(0)}15%{transform:rotate(-18deg)}30%{transform:rotate(18deg)}45%{transform:rotate(-10deg)}60%{transform:rotate(10deg)}75%{transform:rotate(0)}}</style></svg>Call: 8330879961</a>
+      <a href="mailto:markadia.ad@gmail.com" class="btn-o">📧 Email Us</a>
+    </div>
+    <div class="contact-row">
+      <a href="mailto:markadia.ad@gmail.com" class="ci-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><rect x="2" y="5" width="20" height="15" rx="2" stroke="#1de9b6" stroke-width="1.8" fill="none"/><path stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" fill="none"><animate attributeName="d" values="M2 7l10 7 10-7;M2 5l10 5 10-5;M2 7l10 7 10-7" dur="2.5s" repeatCount="indefinite"/></path><line x1="12" y1="2" x2="12" y2="5" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round"><animate attributeName="y1" values="2;0;2" dur="2.5s" repeatCount="indefinite"/></line><polyline points="10,4 12,2 14,4" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="points" values="10,4 12,2 14,4;10,3 12,1 14,3;10,4 12,2 14,4" dur="2.5s" repeatCount="indefinite"/></polyline></svg>markadia.ad@gmail.com</a>
+      <a href="tel:+918330879961" class="ci-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><g style="transform-origin:12px 12px;animation:phoneRing 2s ease-in-out infinite"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.22 1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 4.5c0-.55.45-1 1-1H7.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.58.11.35.03.74-.22 1.02L6.6 10.8z" stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g><path d="M15.5 3.5C17.9 4.2 19.8 6.1 20.5 8.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/></path><path d="M15.5 7a2.5 2.5 0 011.5 1.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="0.3s" repeatCount="indefinite"/></path><style>@keyframes phoneRing{0%,100%{transform:rotate(0)}15%{transform:rotate(-18deg)}30%{transform:rotate(18deg)}45%{transform:rotate(-10deg)}60%{transform:rotate(10deg)}75%{transform:rotate(0)}}</style></svg>8330879961</a>
+    </div>
+  </div>
+  <footer><div class="fbot"><span>© 2026 Markadia. All rights reserved.</span><span class="ftag">Elevate Your Digital Growth ↑</span><a href="mailto:markadia.ad@gmail.com" style="color:var(--teal);text-decoration:none;font-size:11px">markadia.ad@gmail.com</a></div></footer>
+</div>
+
+<!-- ===================== PROCESS ===================== -->
+<div class="page" id="page-process">
+  <div class="ph"><div class="grid-bg"></div>
+    <div class="ph-chip">How We Work</div>
+    <h1 class="ph-h">OUR <span class="tc">PROCESS</span></h1>
+    <p class="ph-p">Simple. Smart. Scalable. Our proven 5-step growth system delivers consistent, measurable results for every client.</p>
+  </div>
+  <div class="sec">
+    <div class="proc-list">
+      <div class="proc-card rev"><div class="proc-num-col"><div class="proc-num">01</div></div><div class="proc-body"><div class="proc-title">🔎 Understand Your Business</div><p class="proc-desc">We start with a deep discovery session — understanding your business, audience, competitors, and current digital presence. We identify exactly where the growth opportunities are and what's holding you back. No assumptions, only data.</p><div class="proc-chip">Week 1</div></div></div>
+      <div class="proc-card rev" style="transition-delay:.08s"><div class="proc-num-col"><div class="proc-num">02</div></div><div class="proc-body"><div class="proc-title">📋 Build a Growth Strategy</div><p class="proc-desc">We craft a tailored full-funnel roadmap specific to your business goals. Channel selection, content pillars, ad strategy, SEO targets, and 30-60-90 day milestones with clear, measurable KPIs so you always know what success looks like.</p><div class="proc-chip">Week 1–2</div></div></div>
+      <div class="proc-card rev" style="transition-delay:.14s"><div class="proc-num-col"><div class="proc-num">03</div></div><div class="proc-body"><div class="proc-title">🎬 Create High-Performing Content</div><p class="proc-desc">Our team creates scroll-stopping content — viral reels, ad creatives, SEO articles, and branded videos — all engineered for engagement and conversion. Every piece has a purpose: drive traffic, build trust, or generate leads.</p><div class="proc-chip">Ongoing</div></div></div>
+      <div class="proc-card rev" style="transition-delay:.2s"><div class="proc-num-col"><div class="proc-num">04</div></div><div class="proc-body"><div class="proc-title">🚀 Launch & Optimize Campaigns</div><p class="proc-desc">We launch campaigns and analyse performance data weekly — testing creatives, adjusting targeting, improving landing pages, and doubling down on what's working. Every rupee of your budget is optimized for maximum ROI.</p><div class="proc-chip">Weeks 2–4</div></div></div>
+      <div class="proc-card rev" style="transition-delay:.26s"><div class="proc-num-col"><div class="proc-num">05</div></div><div class="proc-body"><div class="proc-title">📈 Scale What Works</div><p class="proc-desc">Once we've identified winning content and campaigns, we scale intelligently using paid ads and automation. Your growth compounds — more reach, more leads, more sales — without proportionally increasing your effort or spend.</p><div class="proc-chip">Month 2+</div></div></div>
+    </div>
+    <div class="proc-tagline rev"><p>Simple. <span class="tc">Smart.</span> Scalable.</p><p style="font-size:13px;font-family:var(--font-b);font-weight:400;color:var(--muted);margin-top:6px;text-transform:none;letter-spacing:0">That's the Markadia way — no fluff, no guessing, just proven growth systems.</p></div>
+  </div>
+  <div class="cta-strip rev">
+    <h2>LET'S START YOUR <span class="tc">JOURNEY</span></h2>
+    <p>Ready to experience our proven 5-step growth system? Book your free strategy consultation today.</p>
+    <div class="btns" style="justify-content:center">
+      <a href="tel:+918330879961" class="btn-p">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><rect x="3" y="4" width="18" height="17" rx="2" fill="#1de9b6" stroke="#1de9b6" stroke-width="1.2"/><line x1="3" y1="9" x2="21" y2="9" stroke="#0d1424" stroke-width="1.5"/><line x1="8" y1="2" x2="8" y2="6" stroke="#0d1424" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="2" x2="16" y2="6" stroke="#0d1424" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="15" r="2" fill="#0d1424"><animate attributeName="r" values="1.5;2.5;1.5" dur="1.5s" repeatCount="indefinite"/></circle></svg>
+        Book Free Consultation
+      </a>
+      <a href="mailto:markadia.ad@gmail.com" class="btn-o">✉ Send Email</a>
+    </div>
+    <div class="contact-row">
+      <a href="mailto:markadia.ad@gmail.com" class="ci-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><rect x="2" y="5" width="20" height="15" rx="2" stroke="#1de9b6" stroke-width="1.8" fill="none"/><path stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" fill="none"><animate attributeName="d" values="M2 7l10 7 10-7;M2 5l10 5 10-5;M2 7l10 7 10-7" dur="2.5s" repeatCount="indefinite"/></path><line x1="12" y1="2" x2="12" y2="5" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round"><animate attributeName="y1" values="2;0;2" dur="2.5s" repeatCount="indefinite"/></line><polyline points="10,4 12,2 14,4" stroke="#1de9b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="points" values="10,4 12,2 14,4;10,3 12,1 14,3;10,4 12,2 14,4" dur="2.5s" repeatCount="indefinite"/></polyline></svg>markadia.ad@gmail.com</a>
+      <a href="tel:+918330879961" class="ci-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><g style="transform-origin:12px 12px;animation:phoneRing 2s ease-in-out infinite"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.22 1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 4.5c0-.55.45-1 1-1H7.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.58.11.35.03.74-.22 1.02L6.6 10.8z" stroke="#1de9b6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g><path d="M15.5 3.5C17.9 4.2 19.8 6.1 20.5 8.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/></path><path d="M15.5 7a2.5 2.5 0 011.5 1.5" stroke="#1de9b6" stroke-width="1.4" stroke-linecap="round" fill="none"><animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="0.3s" repeatCount="indefinite"/></path><style>@keyframes phoneRing{0%,100%{transform:rotate(0)}15%{transform:rotate(-18deg)}30%{transform:rotate(18deg)}45%{transform:rotate(-10deg)}60%{transform:rotate(10deg)}75%{transform:rotate(0)}}</style></svg>8330879961</a>
+    </div>
+  </div>
+  <footer><div class="fbot"><span>© 2026 Markadia. All rights reserved.</span><span class="ftag">Elevate Your Digital Growth ↑</span><a href="mailto:markadia.ad@gmail.com" style="color:var(--teal);text-decoration:none;font-size:11px">markadia.ad@gmail.com</a></div></footer>
+</div>
+
+<script>
+// LOGO
+const LOGO='data:image/png;base64,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';
+['nav-logo','hero-logo','foot-logo'].forEach(id=>{const el=document.getElementById(id);if(el)el.src=LOGO});
+
+// PAGE NAV
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const t=document.getElementById('tab-'+name);if(t)t.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(triggerReveals,120);
+}
+
+// REVEAL
+function triggerReveals(){
+  const els=document.querySelectorAll('.page.active .rev:not(.vis)');
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.07});
+  els.forEach(el=>obs.observe(el));
+}
+triggerReveals();
+
+// CURSOR
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function animCur(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cur2.style.left=rx+'px';cur2.style.top=ry+'px';requestAnimationFrame(animCur)})();
+document.addEventListener('mouseover',e=>{if(e.target.closest('a,button,.svc-card,.pkg,.qcard,.wc,.proc-card,.tcard,.ck')){cur.style.width='14px';cur.style.height='14px';cur2.style.width='44px';cur2.style.height='44px';cur2.style.borderColor='rgba(29,233,182,.8)'}},{passive:true});
+document.addEventListener('mouseout',e=>{if(e.target.closest('a,button,.svc-card,.pkg,.qcard,.wc,.proc-card,.tcard,.ck')){cur.style.width='8px';cur.style.height='8px';cur2.style.width='32px';cur2.style.height='32px';cur2.style.borderColor='rgba(29,233,182,.4)'}},{passive:true});
+
+// CANVAS
+const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d');
+let W,H,pts=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+class Pt{constructor(){this.reset()}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.22;this.vy=(Math.random()-.5)*.22-.07;this.r=Math.random()*1.3+.35;this.a=Math.random()*.42+.08;this.life=0;this.ml=Math.random()*260+160}update(){this.x+=this.vx;this.y+=this.vy;this.life++;if(this.life>this.ml||this.y<-5)this.reset()}draw(){const f=Math.sin(this.life/this.ml*Math.PI);ctx.globalAlpha=this.a*f;ctx.fillStyle='#1de9b6';ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fill()}}
+for(let i=0;i<80;i++)pts.push(new Pt());
+let mox=0,moy=0;document.addEventListener('mousemove',e=>{mox=e.clientX;moy=e.clientY});
+(function render(){ctx.clearRect(0,0,W,H);ctx.globalAlpha=.04;ctx.strokeStyle='#1de9b6';ctx.lineWidth=.5;for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}const g=ctx.createRadialGradient(mox,moy,0,mox,moy,300);g.addColorStop(0,'rgba(29,233,182,.065)');g.addColorStop(1,'transparent');ctx.globalAlpha=1;ctx.fillStyle=g;ctx.fillRect(0,0,W,H);pts.forEach(p=>{p.update();p.draw()});ctx.globalAlpha=1;requestAnimationFrame(render)})();
+
+// 3D TILT
+document.querySelectorAll('.svc-card').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();const dx=(e.clientX-r.left-r.width/2)/(r.width/2);const dy=(e.clientY-r.top-r.height/2)/(r.height/2);c.style.transform=`perspective(800px) rotateY(${dx*7}deg) rotateX(${-dy*5}deg) translateZ(6px)`});c.addEventListener('mouseleave',()=>{c.style.transform=''})});
+</script>
+</body>
+</html>
